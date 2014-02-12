@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MarkingMenu">        <!-- Defines the number of items. -->
+        <attr name="numItems">
+            <enum name="one" value="1" />
+            <enum name="two" value="2" />
+            <enum name="three" value="3" />
+            <enum name="four" value="4" />
+            <enum name="five" value="5" />
+            <enum name="six" value="6" />
+        </attr>
+        <!-- Defines the color of the drawing's stroke. -->
+        <attr name="strokeColor" format="color" />
+    </declare-styleable>
+
+</resources>
