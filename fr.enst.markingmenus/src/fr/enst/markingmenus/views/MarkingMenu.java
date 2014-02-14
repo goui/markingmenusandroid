@@ -17,8 +17,8 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 import fr.enst.markingmenus.MarkingMenuItem;
+import fr.enst.markingmenus.OnMenuItemClickListener;
 import fr.enst.markingmenus.R;
 
 /**
@@ -37,7 +37,8 @@ public class MarkingMenu extends View {
 
 	public static int LONG_PRESS_DURATION = 500;
 
-	private List<MarkingMenuItem> items;
+	private MarkingMenuItem firstLevel;
+	private MarkingMenuItem currentMenu;
 
 	private Paint paintBackground;
 	private Paint paintSelected;
@@ -79,8 +80,8 @@ public class MarkingMenu extends View {
 	}
 
 	public void addItem(MarkingMenuItem item) {
-		item.setId(items.size());
-		items.add(item);
+		item.setId(firstLevel.getChildren().size());
+		firstLevel.addItem(item);
 		invalidate();
 		requestLayout();
 	}
@@ -92,7 +93,7 @@ public class MarkingMenu extends View {
 		rectIn = new RectF();
 		rectOut = new RectF();
 		points = new ArrayList<Point>();
-		items = new ArrayList<MarkingMenuItem>();
+		firstLevel = new MarkingMenuItem();
 
 		WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
@@ -170,20 +171,22 @@ public class MarkingMenu extends View {
 		canvas.drawOval(rectOut, paintBorder);
 
 		rect.set(touchPoint.x - radius, touchPoint.y - radius, touchPoint.x + radius, touchPoint.y + radius);
-		for (int i = 0; i < items.size(); i++) {
-			canvas.drawArc(rect, (float) 360 / items.size() * i - 90, (float) 360 / items.size(), false,
-					itemSelected == i ? paintSelected : paintBackground);
+		for (int i = 0; i < currentMenu.getChildren().size(); i++) {
+			canvas.drawArc(rect, (float) 360 / currentMenu.getChildren().size() * i - 90, (float) 360
+					/ currentMenu.getChildren().size(), false, itemSelected == i ? paintSelected : paintBackground);
 		}
-		for (int i = 0; i < items.size(); i++) {
-			canvas.drawArc(rect, (float) (360 / items.size() * i - 91), 1.4f, false, paintSeparator);
-			canvas.drawArc(rect, (float) (360 / items.size() * (i + 1) - 91), 1.4f, false, paintSeparator);
+		for (int i = 0; i < currentMenu.getChildren().size(); i++) {
+			canvas.drawArc(rect, (float) (360 / currentMenu.getChildren().size() * i - 91), 1.4f, false, paintSeparator);
+			canvas.drawArc(rect, (float) (360 / currentMenu.getChildren().size() * (i + 1) - 91), 1.4f, false,
+					paintSeparator);
 		}
-		double angle = Math.PI / items.size() - Math.PI / 2;
-		for (int i = 0; i < items.size(); i++) {
+		double angle = Math.PI / currentMenu.getChildren().size() - Math.PI / 2;
+		for (int i = 0; i < currentMenu.getChildren().size(); i++) {
 			double x = radius * Math.cos(angle);
 			double y = radius * Math.sin(angle);
-			canvas.drawText(items.get(i).getText(), touchPoint.x + (float) x, touchPoint.y + (float) y, paintText);
-			angle += 2 * Math.PI / items.size();
+			canvas.drawText(currentMenu.getChildren().get(i).getText(), touchPoint.x + (float) x, touchPoint.y
+					+ (float) y, paintText);
+			angle += 2 * Math.PI / currentMenu.getChildren().size();
 		}
 	}
 
@@ -204,11 +207,14 @@ public class MarkingMenu extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			initLevel();
+
 			handler.postDelayed(longPressed, LONG_PRESS_DURATION);
 			handler.removeCallbacks(menuSelection);
 
 			touchPoint = new Point((int) event.getX(), (int) event.getY());
 			points.add(touchPoint);
+
 			break;
 		case MotionEvent.ACTION_MOVE:
 			handler.removeCallbacks(longPressed);
@@ -223,28 +229,50 @@ public class MarkingMenu extends View {
 
 			invalidate();
 			requestLayout();
+
 			break;
 		case MotionEvent.ACTION_UP:
 			handler.removeCallbacks(longPressed);
 			handler.removeCallbacks(menuSelection);
 
-			if (itemSelected != -1) {
-				for (MarkingMenuItem item : items) {
-					if (item.getId() == itemSelected && !item.containsItem()) {
-						Toast.makeText(getContext(), "item " + (itemSelected + 1) + " selected!", Toast.LENGTH_SHORT)
-								.show();
-					}
-				}
+			if (mode == Mode.EXPERT) {
+				analyseDrawing();
 			}
+
+			if (mode == Mode.BEGINNER) {
+				releaseMenu();
+			}
+
 			itemSelected = -1;
 			points.clear();
 			mode = Mode.EXPERT;
-
 			invalidate();
 			requestLayout();
+
 			break;
 		}
 		return true;
+	}
+
+	private void initLevel() {
+		currentMenu = firstLevel;
+		for (int i = 0; i < currentMenu.getChildren().size(); i++) {
+			currentMenu.getChildren().get(i).setId(i);
+		}
+	}
+
+	private void releaseMenu() {
+		if (itemSelected != -1) {
+			OnMenuItemClickListener listener = currentMenu.getChildren().get(itemSelected).getOnMenuClickListener();
+			if (listener != null) {
+				listener.onMenuClick();
+			}
+		}
+	}
+
+	private void analyseDrawing() {
+		// TODO Auto-generated method stub
+
 	}
 
 	final Handler handler = new Handler();
@@ -258,11 +286,13 @@ public class MarkingMenu extends View {
 	Runnable menuSelection = new Runnable() {
 		@Override
 		public void run() {
-			for (MarkingMenuItem item : items) {
+			for (MarkingMenuItem item : currentMenu.getChildren()) {
 				if (item.getId() == itemSelected) {
 					if (item.containsItem()) {
-						Toast.makeText(getContext(), "item " + (itemSelected + 1) + " has children, poping menu",
-								Toast.LENGTH_SHORT).show();
+						currentMenu = currentMenu.getChildren().get(itemSelected);
+						setMenuLocation(currentPoint.x, currentPoint.y);
+						invalidate();
+						requestLayout();
 					}
 				}
 			}
@@ -280,9 +310,9 @@ public class MarkingMenu extends View {
 			}
 			float startAngle = 0;
 			float endAngle = 0;
-			for (int i = 0; i < items.size(); i++) {
-				startAngle = (270 + 360 / items.size() * i) % 360;
-				endAngle = (startAngle + 360 / items.size()) % 360;
+			for (int i = 0; i < currentMenu.getChildren().size(); i++) {
+				startAngle = (270 + 360 / currentMenu.getChildren().size() * i) % 360;
+				endAngle = (startAngle + 360 / currentMenu.getChildren().size()) % 360;
 				if (startAngle > endAngle) {
 					if (angle > startAngle || angle < endAngle) {
 						itemSelected = i;

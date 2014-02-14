@@ -3,12 +3,12 @@ package fr.enst.markingmenus;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Toast;
 import fr.enst.markingmenus.views.MarkingMenu;
 
 public class MainActivity extends Activity {
 
 	private MarkingMenu mm;
-	private int menuSize = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,15 +18,26 @@ public class MainActivity extends Activity {
 		mm = (MarkingMenu) findViewById(R.id.marking_menu);
 
 		MarkingMenuItem item_1 = new MarkingMenuItem("1");
-		MarkingMenuItem item_1_1 = new MarkingMenuItem();
-		MarkingMenuItem item_1_2 = new MarkingMenuItem();
+		
+		MarkingMenuItem item_1_1 = new MarkingMenuItem("1_1");
+		MarkingMenuItem item_1_1_1 = new MarkingMenuItem("1_1_1");
+		MarkingMenuItem item_1_1_2 = new MarkingMenuItem("1_1_2");
+		item_1_1.addItem(item_1_1_1);
+		item_1_1.addItem(item_1_1_2);
+		
+		MarkingMenuItem item_1_2 = new MarkingMenuItem("1_2");
+		
 		item_1.addItem(item_1_1);
 		item_1.addItem(item_1_2);
 
 		MarkingMenuItem item_2 = new MarkingMenuItem("2");
-		MarkingMenuItem item_2_1 = new MarkingMenuItem();
-		MarkingMenuItem item_2_2 = new MarkingMenuItem();
-		MarkingMenuItem item_2_3 = new MarkingMenuItem();
+		
+		MarkingMenuItem item_2_1 = new MarkingMenuItem("2_1");
+		
+		MarkingMenuItem item_2_2 = new MarkingMenuItem("2_2");
+		
+		MarkingMenuItem item_2_3 = new MarkingMenuItem("2_3");
+		
 		item_2.addItem(item_2_1);
 		item_2.addItem(item_2_2);
 		item_2.addItem(item_2_3);
@@ -36,7 +47,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onMenuClick() {
 				// TODO Auto-generated method stub
-				
+				Toast.makeText(MainActivity.this, "poyfoqiufhis", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
