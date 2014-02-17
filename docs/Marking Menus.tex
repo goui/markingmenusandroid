@@ -350,7 +350,7 @@ Clearly, smartphones are a great achievement and also a nice improvement for our
 
 \section{Introduction}
 \subsection{Description}
-Marking menus are a combination of pop-up radial menus and gesture recognition. This is a revised form of radial menu. Unlike linear menus where items are aligned sequentially, the marking menus' items are displayed in a circular fashion. The following figure illustrates the difference. 
+Marking menus \cite{markingmenu} are a combination of pop-up radial menus and gesture recognition. This is a revised form of radial menu. Unlike linear menus where items are aligned sequentially, the marking menus' items are displayed in a circular fashion. The following figure illustrates the difference. 
 
 \begin{figure}[!ht] 
 		\centering
@@ -417,8 +417,6 @@ When popping up the menu in novice mode at the edge of the screen, we apply an o
 		\label{linear-marking_menus}
 \end{figure}
 
-As long as we would like to let the users choose their menu structure, we provide a simple way of doing it. By means of an item object containing other item objects, we create a bedrock for user's customization.\\
-
 Regarding the expert mode, the main challenge in the scheme analysis is to determine how many inflection points there are. Because we have limited the number of items per level to 6, an inflection point should present an angle of at least 60\char23. In this way we are sure that a choice has been made by the user. But what if the choice was to go twice in the same direction? What are we supposed to do? We have chosen to display the menu from the novice mode to help the user know where he is and where he can go.
 
 \begin{figure}[!ht] 
@@ -429,7 +427,11 @@ Regarding the expert mode, the main challenge in the scheme analysis is to deter
 		\label{linear-marking_menus}
 \end{figure}
 
+As long as we would like to let the users choose their menu structure, we provide a simple way of doing it. By means of an item object containing other item objects, we create a bedrock for user's customization.\\
+
 \begin{thebibliography}{}
+\bibitem{markingmenu}
+http://www.markingmenus.org/
 \bibitem{android}
 http://developer.android.com/guide/topics/ui/custom-components.html
 \bibitem{touchmenotapps}

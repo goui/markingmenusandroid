@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  17 FEB 2014 21:32
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  17 FEB 2014 21:43
 entering extended mode
-**C:/Users/Goui/Desktop/Télécom*ParisTech/3A/Projet*Libre*P2/Marking*Menus/Ma
-rking*Menus.tex
+**C:/Users/Goui/Desktop/Télécom*ParisTech/3A/Projet*Libre*P2/repository/marki
+ngmenusandroid/docs/Marking*Menus.tex
 
-("C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/Marking Menus/Ma
-rking Menus.tex"
+("C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/repository/marki
+ngmenusandroid/docs/Marking Menus.tex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -374,8 +374,8 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \c@defn=\count123
 \c@ass=\count124
 
-("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\Marking Menus\Ma
-rking Menus.aux"
+("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\repository\marki
+ngmenusandroid\docs\Marking Menus.aux"
 
 LaTeX Warning: Label `linear-marking_menus' multiply defined.
 
@@ -448,10 +448,10 @@ LaTeX Info: Redefining \ref on input line 327.
 LaTeX Info: Redefining \pageref on input line 327.
 LaTeX Info: Redefining \nameref on input line 327.
 
-("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\Marking Menus\Ma
-rking Menus.out")
-("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\Marking Menus\Ma
-rking Menus.out")
+("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\repository\marki
+ngmenusandroid\docs\Marking Menus.out")
+("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\repository\marki
+ngmenusandroid\docs\Marking Menus.out")
 \@outlinefile=\write3
 
 ** ATTENTION: \authorblockN is deprecated (line 344). Use \IEEEauthorblockN ins
@@ -470,19 +470,19 @@ tead.
 tead.
 ** ATTENTION: \authorblockA is deprecated (line 344). Use \IEEEauthorblockA ins
 tead.
-<figure1.png, id=39, 408.3255pt x 142.131pt>
+<figure1.png, id=40, 408.3255pt x 142.131pt>
 File: figure1.png Graphic file (type png)
  <use figure1.png>
 Package pdftex.def Info: figure1.png used on input line 358.
 (pdftex.def)             Requested size: 204.16225pt x 71.0653pt.
 
-<figure2.png, id=41, 143.3355pt x 142.131pt>
+<figure2.png, id=42, 143.3355pt x 142.131pt>
 File: figure2.png Graphic file (type png)
  <use figure2.png>
 Package pdftex.def Info: figure2.png used on input line 380.
 (pdftex.def)             Requested size: 71.66756pt x 71.0653pt.
 
-<figure3.png, id=42, 216.20775pt x 56.00925pt>
+<figure3.png, id=43, 216.20775pt x 56.00925pt>
 File: figure3.png Graphic file (type png)
  <use figure3.png>
 Package pdftex.def Info: figure3.png used on input line 391.
@@ -490,31 +490,32 @@ Package pdftex.def Info: figure3.png used on input line 391.
  [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
- <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/Marking Menus/fi
-gure1.png> <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/Markin
-g Menus/figure2.png> <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre
- P2/Marking Menus/figure3.png>]
-<figure4.png, id=59, 239.09325pt x 236.082pt>
+ <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/repository/marki
+ngmenusandroid/docs/figure1.png> <C:/Users/Goui/Desktop/Télécom ParisTech/3A/
+Projet Libre P2/repository/markingmenusandroid/docs/figure2.png> <C:/Users/Goui
+/Desktop/Télécom ParisTech/3A/Projet Libre P2/repository/markingmenusandroid/
+docs/figure3.png>]
+<figure4.png, id=61, 239.09325pt x 236.082pt>
 File: figure4.png Graphic file (type png)
  <use figure4.png>
 Package pdftex.def Info: figure4.png used on input line 405.
 (pdftex.def)             Requested size: 119.54633pt x 118.0407pt.
 
-<figure5.png, id=60, 579.96675pt x 318.59026pt>
+<figure5.png, id=62, 579.96675pt x 318.59026pt>
 File: figure5.png Graphic file (type png)
  <use figure5.png>
 Package pdftex.def Info: figure5.png used on input line 414.
 (pdftex.def)             Requested size: 252.0pt x 138.43007pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 420--421
-
- []
-
-<figure6.png, id=61, 275.22826pt x 272.81924pt>
+<figure6.png, id=63, 275.22826pt x 272.81924pt>
 File: figure6.png Graphic file (type png)
  <use figure6.png>
-Package pdftex.def Info: figure6.png used on input line 427.
+Package pdftex.def Info: figure6.png used on input line 425.
 (pdftex.def)             Requested size: 137.61378pt x 136.40929pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 430--431
+
+ []
 
 
 ** Conference Paper **
@@ -527,41 +528,42 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 440.
-[2 <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/Marking Menus/
-figure4.png> <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/Mark
-ing Menus/figure5.png> <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Lib
-re P2/Marking Menus/figure6.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 440.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 442.
+[2 <C:/Users/Goui/Desktop/Télécom ParisTech/3A/Projet Libre P2/repository/mar
+kingmenusandroid/docs/figure4.png> <C:/Users/Goui/Desktop/Télécom ParisTech/3
+A/Projet Libre P2/repository/markingmenusandroid/docs/figure5.png> <C:/Users/Go
+ui/Desktop/Télécom ParisTech/3A/Projet Libre P2/repository/markingmenusandroi
+d/docs/figure6.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 442.
 
-("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\Marking Menus\Ma
-rking Menus.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 440.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 440.
+("C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\repository\marki
+ngmenusandroid\docs\Marking Menus.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 442.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 442.
 Package rerunfilecheck Info: File `Marking*Menus.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 440.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 442.
  ) 
 Here is how much of TeX's memory you used:
- 7327 strings out of 493921
- 108600 string characters out of 3144879
- 199650 words of memory out of 3000000
- 10531 multiletter control sequences out of 15000+200000
+ 7329 strings out of 493921
+ 108871 string characters out of 3144879
+ 199683 words of memory out of 3000000
+ 10532 multiletter control sequences out of 15000+200000
  34085 words of font info for 63 fonts, out of 3000000 for 9000
  844 hyphenation exceptions out of 8191
- 30i,8n,28p,765b,363s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 30i,8n,28p,787b,363s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files (x86)/MiKTeX 
 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on "Marking Menus.pdf" (2 pages, 151186 bytes).
+Output written on "Marking Menus.pdf" (2 pages, 151538 bytes).
 PDF statistics:
- 94 PDF objects out of 1000 (max. 8388607)
- 20 named destinations out of 1000 (max. 500000)
+ 96 PDF objects out of 1000 (max. 8388607)
+ 21 named destinations out of 1000 (max. 500000)
  103 words of extra memory for PDF output out of 10000 (max. 10000000)
 
