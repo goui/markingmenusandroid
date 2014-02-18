@@ -9,32 +9,15 @@ package fr.enst.markingmenus;
 
 public final class R {
     public static final class attr {
-        /**  Defines the number of items. 
-         <p>Must be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>one</code></td><td>1</td><td></td></tr>
-<tr><td><code>two</code></td><td>2</td><td></td></tr>
-<tr><td><code>three</code></td><td>3</td><td></td></tr>
-<tr><td><code>four</code></td><td>4</td><td></td></tr>
-<tr><td><code>five</code></td><td>5</td><td></td></tr>
-<tr><td><code>six</code></td><td>6</td><td></td></tr>
-</table>
-         */
-        public static final int numItems=0x7f010000;
-        /**  Defines the color of the drawing's stroke. 
-         <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+        /**  Defines the long press duration for novice mode pop up and menu selection. 
+         <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int strokeColor=0x7f010001;
+        public static final int longPressDuration=0x7f010000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -43,62 +26,24 @@ containing a value of this type.
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f050000;
-        public static final int activity_vertical_margin=0x7f050001;
+        public static final int activity_horizontal_margin=0x7f040000;
+        public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int btn_2_1_north=0x7f020000;
-        public static final int btn_2_1_south=0x7f020001;
-        public static final int btn_2_2_east=0x7f020002;
-        public static final int btn_2_2_east_focused=0x7f020003;
-        public static final int btn_2_2_west=0x7f020004;
-        public static final int btn_4_1_north_east=0x7f020005;
-        public static final int btn_4_1_north_west=0x7f020006;
-        public static final int btn_4_1_south_east=0x7f020007;
-        public static final int btn_4_1_south_west=0x7f020008;
-        public static final int btn_4_2_east=0x7f020009;
-        public static final int btn_4_2_north=0x7f02000a;
-        public static final int btn_4_2_south=0x7f02000b;
-        public static final int btn_4_2_west=0x7f02000c;
-        public static final int btn_6_1_north=0x7f02000d;
-        public static final int btn_6_1_north_east=0x7f02000e;
-        public static final int btn_6_1_north_west=0x7f02000f;
-        public static final int btn_6_1_south=0x7f020010;
-        public static final int btn_6_1_south_east=0x7f020011;
-        public static final int btn_6_1_south_west=0x7f020012;
-        public static final int btn_6_2_east=0x7f020013;
-        public static final int btn_6_2_north_east=0x7f020014;
-        public static final int btn_6_2_north_west=0x7f020015;
-        public static final int btn_6_2_south_east=0x7f020016;
-        public static final int btn_6_2_south_west=0x7f020017;
-        public static final int btn_6_2_west=0x7f020018;
-        public static final int button=0x7f020019;
-        public static final int ic_launcher=0x7f02001a;
+        public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f040008;
-        public static final int five=0x7f040004;
-        public static final int four=0x7f040003;
-        public static final int marking_menu=0x7f040006;
-        public static final int menu_size_picker=0x7f040007;
-        public static final int one=0x7f040000;
-        public static final int six=0x7f040005;
-        public static final int three=0x7f040002;
-        public static final int two=0x7f040001;
+        public static final int marking_menu=0x7f080000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int menu_settings=0x7f030001;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int main=0x7f070000;
     }
     public static final class string {
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int hello_world=0x7f060004;
-        public static final int menu_size=0x7f060002;
-        public static final int title_activity_main_activity=0x7f060003;
+        public static final int app_name=0x7f050000;
+        public static final int title_activity_main_activity=0x7f050001;
     }
     public static final class style {
         /** 
@@ -122,11 +67,11 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f060000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f060001;
     }
     public static final class styleable {
         /** Attributes that can be used with a MarkingMenu.
@@ -135,54 +80,28 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #MarkingMenu_numItems fr.enst.markingmenus:numItems}</code></td><td> Defines the number of items.</td></tr>
-           <tr><td><code>{@link #MarkingMenu_strokeColor fr.enst.markingmenus:strokeColor}</code></td><td> Defines the color of the drawing's stroke.</td></tr>
+           <tr><td><code>{@link #MarkingMenu_longPressDuration fr.enst.markingmenus:longPressDuration}</code></td><td> Defines the long press duration for novice mode pop up and menu selection.</td></tr>
            </table>
-           @see #MarkingMenu_numItems
-           @see #MarkingMenu_strokeColor
+           @see #MarkingMenu_longPressDuration
          */
         public static final int[] MarkingMenu = {
-            0x7f010000, 0x7f010001
+            0x7f010000
         };
         /**
           <p>
           @attr description
-           Defines the number of items. 
+           Defines the long press duration for novice mode pop up and menu selection. 
 
 
-          <p>Must be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>one</code></td><td>1</td><td></td></tr>
-<tr><td><code>two</code></td><td>2</td><td></td></tr>
-<tr><td><code>three</code></td><td>3</td><td></td></tr>
-<tr><td><code>four</code></td><td>4</td><td></td></tr>
-<tr><td><code>five</code></td><td>5</td><td></td></tr>
-<tr><td><code>six</code></td><td>6</td><td></td></tr>
-</table>
-          <p>This is a private symbol.
-          @attr name fr.enst.markingmenus:numItems
-        */
-        public static final int MarkingMenu_numItems = 0;
-        /**
-          <p>
-          @attr description
-           Defines the color of the drawing's stroke. 
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name fr.enst.markingmenus:strokeColor
+          @attr name fr.enst.markingmenus:longPressDuration
         */
-        public static final int MarkingMenu_strokeColor = 1;
+        public static final int MarkingMenu_longPressDuration = 0;
     };
 }

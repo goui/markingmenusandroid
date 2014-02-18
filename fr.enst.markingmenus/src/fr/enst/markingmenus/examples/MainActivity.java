@@ -1,9 +1,12 @@
-package fr.enst.markingmenus;
+package fr.enst.markingmenus.examples;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
+import fr.enst.markingmenus.R;
+import fr.enst.markingmenus.interfaces.OnMenuItemClickListener;
+import fr.enst.markingmenus.objects.MarkingMenuItem;
 import fr.enst.markingmenus.views.MarkingMenu;
 
 public class MainActivity extends Activity {
