@@ -3,7 +3,7 @@ package fr.enst.markingmenus.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.enst.markingmenus.interfaces.OnMenuItemClickListener;
+import fr.enst.markingmenus.interfaces.OnMenuItemMarkListener;
 
 /**
  * Class representing a menu item. It can contain items and has id and text.
@@ -36,7 +36,7 @@ public class MarkingMenuItem {
 	/**
 	 * The click event listener.
 	 */
-	private OnMenuItemClickListener clickListener;
+	private OnMenuItemMarkListener markListener;
 
 	/**
 	 * Default constructor.
@@ -124,8 +124,8 @@ public class MarkingMenuItem {
 	 * 
 	 * @param listener
 	 */
-	public void setOnMenuClickListener(OnMenuItemClickListener listener) {
-		clickListener = listener;
+	public void setOnMenuMarkListener(OnMenuItemMarkListener listener) {
+		markListener = listener;
 	}
 
 	/**
@@ -133,11 +133,11 @@ public class MarkingMenuItem {
 	 * 
 	 * @return the click listener
 	 */
-	public OnMenuItemClickListener getOnMenuClickListener() {
+	public OnMenuItemMarkListener getOnMenuMarkListener() {
 		if (containsItem) {
 			return null;
 		}
-		return clickListener;
+		return markListener;
 	}
 
 }

@@ -5,6 +5,6 @@ package fr.enst.markingmenus.interfaces;
  * @author Goui
  *
  */
-public interface OnMenuItemClickListener {
-	void onMenuClick();
+public interface OnMenuItemMarkListener {
+	void onMenuMark();
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
 import fr.enst.markingmenus.R;
-import fr.enst.markingmenus.interfaces.OnMenuItemClickListener;
+import fr.enst.markingmenus.interfaces.OnMenuItemMarkListener;
 import fr.enst.markingmenus.objects.MarkingMenuItem;
 import fr.enst.markingmenus.views.MarkingMenu;
 
@@ -34,6 +34,13 @@ public class MainActivity extends Activity {
 		item_1.addItem(item_1_2);
 
 		MarkingMenuItem item_2 = new MarkingMenuItem("2");
+		item_2.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "Sfwdgf", Toast.LENGTH_SHORT).show();
+			}
+		});
 		
 		MarkingMenuItem item_2_1 = new MarkingMenuItem("2_1");
 		
@@ -46,9 +53,9 @@ public class MainActivity extends Activity {
 		item_2.addItem(item_2_3);
 
 		MarkingMenuItem item_3 = new MarkingMenuItem("3");
-		item_3.setOnMenuClickListener(new OnMenuItemClickListener() {
+		item_3.setOnMenuMarkListener(new OnMenuItemMarkListener() {
 			@Override
-			public void onMenuClick() {
+			public void onMenuMark() {
 				// TODO Auto-generated method stub
 				Toast.makeText(MainActivity.this, "poyfoqiufhis", Toast.LENGTH_SHORT).show();
 			}

@@ -37,4 +37,17 @@ public class MenuCalculations {
 		float opp = y2 - y1;
 		return (float) (Math.atan2(opp, adj) * 180 / Math.PI);
 	}
+
+	/**
+	 * Method used to compute the slope between 2 points.
+	 * 
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return the slope
+	 */
+	public static float slope(float x1, float y1, float x2, float y2) {
+		return (y2 - y1) / (x2 - x1);
+	}
 }

@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import android.content.Context;
@@ -23,7 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import fr.enst.markingmenus.R;
-import fr.enst.markingmenus.interfaces.OnMenuItemClickListener;
+import fr.enst.markingmenus.interfaces.OnMenuItemMarkListener;
 import fr.enst.markingmenus.objects.MarkingMenuItem;
 import fr.enst.markingmenus.objects.MenuCalculations;
 
@@ -42,7 +41,7 @@ public class MarkingMenu extends View {
 	 * 
 	 */
 	private enum Mode {
-		BEGINNER, EXPERT;
+		NOVICE, EXPERT;
 	}
 
 	/**
@@ -53,7 +52,7 @@ public class MarkingMenu extends View {
 	/**
 	 * The time duration for long press event.
 	 */
-	private int longPressDuration = 500;
+	private int longPressDuration;
 
 	/**
 	 * The first level item of the marking menu.
@@ -171,7 +170,7 @@ public class MarkingMenu extends View {
 		initMarkingMenu();
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MarkingMenu);
-		longPressDuration = a.getInteger(R.styleable.MarkingMenu_longPressDuration, 2);
+		longPressDuration = a.getInteger(R.styleable.MarkingMenu_longPressDuration, 500);
 
 		a.recycle();
 	}
@@ -261,7 +260,7 @@ public class MarkingMenu extends View {
 	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
-		if (mode == Mode.BEGINNER) {
+		if (mode == Mode.NOVICE) {
 			onDrawNovice(canvas);
 		}
 
@@ -425,7 +424,7 @@ public class MarkingMenu extends View {
 
 			// if we are in the novice mode we need to know if the menu has been
 			// released on a leaf item.
-			if (mode == Mode.BEGINNER) {
+			if (mode == Mode.NOVICE) {
 				releaseMenu();
 			}
 
@@ -459,9 +458,9 @@ public class MarkingMenu extends View {
 	 */
 	private void releaseMenu() {
 		if (itemSelected != -1) {
-			OnMenuItemClickListener listener = currentMenu.getChildren().get(itemSelected).getOnMenuClickListener();
+			OnMenuItemMarkListener listener = currentMenu.getChildren().get(itemSelected).getOnMenuMarkListener();
 			if (listener != null) {
-				listener.onMenuClick();
+				listener.onMenuMark();
 			}
 		}
 	}
@@ -471,20 +470,47 @@ public class MarkingMenu extends View {
 	 * reached.
 	 */
 	private void analyseDrawing() {
-		TreeMap<Integer, Float> angles = new TreeMap<Integer, Float>();
-		for (int i = 0; i < points.size() - 1; i++) {
-			float angle = MenuCalculations.arctan(points.get(i).x, points.get(i).y, points.get(i + 1).x,
-					points.get(i + 1).y);
-			angles.put(i, angle);
+		List<Point> inflectionPoints = new ArrayList<Point>();
+		inflectionPoints.add(points.get(0));
+
+		if (points.size() > 1) {
+			float refAngle = MenuCalculations
+					.arctan(points.get(0).x, points.get(0).y, points.get(1).x, points.get(1).y);
+			for (int i = 1; i < points.size() - 5; i += 5) {
+				float currentAngle = MenuCalculations.arctan(points.get(i).x, points.get(i).y, points.get(i + 4).x,
+						points.get(i + 4).y);
+				if (Math.abs(refAngle) > 135 && Math.abs(currentAngle) > 135) {
+					if (Math.abs(((currentAngle + 360) % 360) - ((refAngle + 360) % 360)) >= 45) {
+						inflectionPoints.add(points.get(i));
+					}
+				} else {
+					if (Math.abs(currentAngle - refAngle) >= 45) {
+						inflectionPoints.add(points.get(i));
+					}
+				}
+				refAngle = currentAngle;
+			}
+
+			inflectionPoints.add(points.get(points.size() - 1));
+			for (int i = 0; i < inflectionPoints.size() - 1; i++) {
+				canvas.drawLine(inflectionPoints.get(i).x, inflectionPoints.get(i).y, inflectionPoints.get(i + 1).x,
+						inflectionPoints.get(i + 1).y, paintExpertRec);
+			}
 		}
-		SortedSet<Map.Entry<Integer, Float>> sortedSet = entriesSortedByValues(angles, false);
-		TreeMap<Integer, Float> bestAngles = new TreeMap<Integer, Float>();
-		bestAngles.put(sortedSet.iterator().next().getKey(), sortedSet.iterator().next().getValue());
-		bestAngles.put(sortedSet.iterator().next().getKey(), sortedSet.iterator().next().getValue());
-		bestAngles.put(sortedSet.iterator().next().getKey(), sortedSet.iterator().next().getValue());
-		// canvas.drawLine(points.get(0).x, points.get(0).y,
-		// points.get(bestAngles.).x, points.get(0).y, paintExpertFIN);
 	}
+
+	/*
+	 * 
+	 */
+
+	/*
+	 * float refSlope = MenuCalculations.slope(points.get(0).x, points.get(0).y,
+	 * points.get(1).x, points.get(1).y); for (int i = 1; i < points.size() - 5;
+	 * i += 5) { float currentSlope = MenuCalculations.slope(points.get(i).x,
+	 * points.get(i).y, points.get(i + 5).x, points.get(i + 5).y); if
+	 * (Math.abs(currentSlope - refSlope) >= 1.0f) {
+	 * inflectionPoints.add(points.get(i)); } refSlope = currentSlope; }
+	 */
 
 	/**
 	 * Method used to obtain a sorted set from a tree map.
@@ -515,7 +541,7 @@ public class MarkingMenu extends View {
 	 */
 	private Runnable longPressed = new Runnable() {
 		public void run() {
-			mode = Mode.BEGINNER;
+			mode = Mode.NOVICE;
 			invalidate();
 			requestLayout();
 		}
