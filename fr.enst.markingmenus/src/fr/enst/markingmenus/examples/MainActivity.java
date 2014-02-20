@@ -43,10 +43,31 @@ public class MainActivity extends Activity {
 		});
 		
 		MarkingMenuItem item_2_1 = new MarkingMenuItem("2_1");
+		item_2_1.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "item_2_1", Toast.LENGTH_SHORT).show();
+			}
+		});
 		
 		MarkingMenuItem item_2_2 = new MarkingMenuItem("2_2");
+		item_2_2.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "item_2_2", Toast.LENGTH_SHORT).show();
+			}
+		});
 		
 		MarkingMenuItem item_2_3 = new MarkingMenuItem("2_3");
+		item_2_3.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "item_2_3", Toast.LENGTH_SHORT).show();
+			}
+		});
 		
 		item_2.addItem(item_2_1);
 		item_2.addItem(item_2_2);

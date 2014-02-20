@@ -1,11 +1,7 @@
 package fr.enst.markingmenus.views;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,6 +17,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 import fr.enst.markingmenus.R;
 import fr.enst.markingmenus.interfaces.OnMenuItemMarkListener;
 import fr.enst.markingmenus.objects.MarkingMenuItem;
@@ -142,12 +139,17 @@ public class MarkingMenu extends View {
 	/**
 	 * The index of the selected item.
 	 */
-	private int itemSelected = -1;
+	private int selectedItem = -1;
 
 	/**
 	 * The thickness of the menu arcs.
 	 */
 	private int menuThickness = 90;
+
+	/**
+	 * The canvas used to draw in the widget.
+	 */
+	private Canvas canvas;
 
 	/**
 	 * Default constructor.
@@ -260,19 +262,16 @@ public class MarkingMenu extends View {
 	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
+		this.canvas = canvas;
+
 		if (mode == Mode.NOVICE) {
-			onDrawNovice(canvas);
+			onDrawNovice();
 		}
 
 		if (mode == Mode.EXPERT) {
-			onDrawExpert(canvas);
+			onDrawExpert();
 		}
 	}
-
-	/**
-	 * The canvas used to draw in the widget.
-	 */
-	private Canvas canvas;
 
 	/**
 	 * Method used to draw in expert mode. It will draw a curve following the
@@ -280,7 +279,7 @@ public class MarkingMenu extends View {
 	 * 
 	 * @param canvas
 	 */
-	private void onDrawExpert(Canvas canvas) {
+	private void onDrawExpert() {
 		Path path = new Path();
 		boolean first = true;
 		for (Point point : points) {
@@ -292,7 +291,6 @@ public class MarkingMenu extends View {
 			}
 		}
 		canvas.drawPath(path, paintExpert);
-		this.canvas = canvas;
 	}
 
 	/**
@@ -302,7 +300,7 @@ public class MarkingMenu extends View {
 	 * 
 	 * @param canvas
 	 */
-	private void onDrawNovice(Canvas canvas) {
+	private void onDrawNovice() {
 		setMenuLocation(touchPoint.x, touchPoint.y);
 
 		// setting the inner and outer bounding boxes.
@@ -320,7 +318,7 @@ public class MarkingMenu extends View {
 		rect.set(touchPoint.x - radius, touchPoint.y - radius, touchPoint.x + radius, touchPoint.y + radius);
 		for (int i = 0; i < currentMenu.getChildren().size(); i++) {
 			canvas.drawArc(rect, (float) 360 / currentMenu.getChildren().size() * i - 90, (float) 360
-					/ currentMenu.getChildren().size(), false, itemSelected == i ? paintSelected : paintBackground);
+					/ currentMenu.getChildren().size(), false, selectedItem == i ? paintSelected : paintBackground);
 		}
 
 		// drawing the separators between items.
@@ -400,7 +398,7 @@ public class MarkingMenu extends View {
 
 			// if an item is selected a long press in it will trigger its
 			// marking action.
-			if (itemSelected != -1) {
+			if (selectedItem != -1) {
 				handler.postDelayed(menuSelection, longPressDuration);
 			}
 
@@ -419,7 +417,10 @@ public class MarkingMenu extends View {
 
 			// if we are in the expert mode we need to analyze the scheme drawn.
 			if (mode == Mode.EXPERT) {
-				analyseDrawing();
+				if (points.size() > 1) {
+					analyseDrawing();
+					decryptPattern();
+				}
 			}
 
 			// if we are in the novice mode we need to know if the menu has been
@@ -429,7 +430,7 @@ public class MarkingMenu extends View {
 			}
 
 			// resetting all the concerned objects.
-			itemSelected = -1;
+			selectedItem = -1;
 			points.clear();
 			mode = Mode.EXPERT;
 
@@ -457,78 +458,91 @@ public class MarkingMenu extends View {
 	 * throwing the corresponding event.
 	 */
 	private void releaseMenu() {
-		if (itemSelected != -1) {
-			OnMenuItemMarkListener listener = currentMenu.getChildren().get(itemSelected).getOnMenuMarkListener();
-			if (listener != null) {
-				listener.onMenuMark();
+		if (selectedItem != -1) {
+			if (!currentMenu.getChildren().isEmpty()) {
+				OnMenuItemMarkListener listener = currentMenu.getChildren().get(selectedItem).getOnMenuMarkListener();
+				if (listener != null) {
+					listener.onMenuMark();
+				}
 			}
 		}
 	}
+
+	/**
+	 * List containing all the inflection points including the first and the
+	 * last points.
+	 */
+	private List<Point> inflectionPoints;
 
 	/**
 	 * Method used to analyze the drawn scheme in order to select the right item
 	 * reached.
 	 */
 	private void analyseDrawing() {
-		List<Point> inflectionPoints = new ArrayList<Point>();
+		inflectionPoints = new ArrayList<Point>();
 		inflectionPoints.add(points.get(0));
 
-		if (points.size() > 1) {
-			float refAngle = MenuCalculations
-					.arctan(points.get(0).x, points.get(0).y, points.get(1).x, points.get(1).y);
-			for (int i = 1; i < points.size() - 5; i += 5) {
-				float currentAngle = MenuCalculations.arctan(points.get(i).x, points.get(i).y, points.get(i + 4).x,
-						points.get(i + 4).y);
-				if (Math.abs(refAngle) > 135 && Math.abs(currentAngle) > 135) {
-					if (Math.abs(((currentAngle + 360) % 360) - ((refAngle + 360) % 360)) >= 45) {
-						inflectionPoints.add(points.get(i));
-					}
-				} else {
-					if (Math.abs(currentAngle - refAngle) >= 45) {
-						inflectionPoints.add(points.get(i));
-					}
+		// first we calculate the first angle between the first 2 points in our
+		// inflection points list.
+		float refAngle = MenuCalculations.arctan(points.get(0).x, points.get(0).y, points.get(1).x, points.get(1).y);
+
+		// then we iterate every 5 points our drawing in order to dodge smooth
+		// direction changes.
+		for (int i = 1; i < points.size() - 5; i += 5) {
+
+			// calculating next angle.
+			float currentAngle = MenuCalculations.arctan(points.get(i).x, points.get(i).y, points.get(i + 4).x,
+					points.get(i + 4).y);
+
+			// particular case when angles go from negative to positive.
+			if (Math.abs(refAngle) > 135 && Math.abs(currentAngle) > 135) {
+				if (Math.abs(((currentAngle + 360) % 360) - ((refAngle + 360) % 360)) >= 45) {
+					inflectionPoints.add(points.get(i));
 				}
-				refAngle = currentAngle;
 			}
 
-			inflectionPoints.add(points.get(points.size() - 1));
-			for (int i = 0; i < inflectionPoints.size() - 1; i++) {
-				canvas.drawLine(inflectionPoints.get(i).x, inflectionPoints.get(i).y, inflectionPoints.get(i + 1).x,
-						inflectionPoints.get(i + 1).y, paintExpertRec);
+			// if the direction changes with more than 45 degrees it is an
+			// inflection point.
+			else {
+				if (Math.abs(currentAngle - refAngle) >= 45) {
+					inflectionPoints.add(points.get(i));
+				}
 			}
+			refAngle = currentAngle;
+		}
+
+		// adding the last point.
+		inflectionPoints.add(points.get(points.size() - 1));
+
+		// drawing the simplified scheme.
+		for (int i = 0; i < inflectionPoints.size() - 1; i++) {
+			canvas.drawLine(inflectionPoints.get(i).x, inflectionPoints.get(i).y, inflectionPoints.get(i + 1).x,
+					inflectionPoints.get(i + 1).y, paintExpertRec);
 		}
 	}
 
-	/*
-	 * 
-	 */
-
-	/*
-	 * float refSlope = MenuCalculations.slope(points.get(0).x, points.get(0).y,
-	 * points.get(1).x, points.get(1).y); for (int i = 1; i < points.size() - 5;
-	 * i += 5) { float currentSlope = MenuCalculations.slope(points.get(i).x,
-	 * points.get(i).y, points.get(i + 5).x, points.get(i + 5).y); if
-	 * (Math.abs(currentSlope - refSlope) >= 1.0f) {
-	 * inflectionPoints.add(points.get(i)); } refSlope = currentSlope; }
-	 */
-
 	/**
-	 * Method used to obtain a sorted set from a tree map.
+	 * Method used to decrypt the drawn scheme, it will browse items to know
+	 * where the final selected item is.
 	 * 
-	 * @param map
-	 * @param ascendingOrder
-	 * @return the sorted set
+	 * @param inflectionPoints
 	 */
-	static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map,
-			final boolean ascendingOrder) {
-		SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<Map.Entry<K, V>>(new Comparator<Map.Entry<K, V>>() {
-			@Override
-			public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-				return ascendingOrder ? e1.getValue().compareTo(e2.getValue()) : e2.getValue().compareTo(e1.getValue());
+	private void decryptPattern() {
+		MarkingMenuItem currentItem = currentMenu;
+		int currentSelectedItem = 0;
+		for (int i = 0; i < inflectionPoints.size() - 1; i++) {
+			currentSelectedItem = getSelectedItem(inflectionPoints.get(i), inflectionPoints.get(i + 1), currentItem);
+			if (currentSelectedItem != -1 && !currentItem.getChildren().isEmpty()) {
+				currentItem = currentItem.getChildren().get(currentSelectedItem);
 			}
-		});
-		sortedEntries.addAll(map.entrySet());
-		return sortedEntries;
+		}
+		if (currentItem.getOnMenuMarkListener() != null) {
+			currentItem.getOnMenuMarkListener().onMenuMark();
+			// TODO clear canvas.
+		} else {
+			// TODO show novice menu because we are not on a leaf item.
+			Toast.makeText(getContext(), "Non-leaf Item", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	/**
@@ -548,21 +562,17 @@ public class MarkingMenu extends View {
 	};
 
 	/**
-	 * Menu selection event selecting the right item and making everything
-	 * redraw.
+	 * Menu selection event making everything redraw to the new menu if selected
+	 * item contains menu.
 	 */
 	private Runnable menuSelection = new Runnable() {
 		@Override
 		public void run() {
-			for (MarkingMenuItem item : currentMenu.getChildren()) {
-				if (item.getId() == itemSelected) {
-					if (item.containsItem()) {
-						currentMenu = currentMenu.getChildren().get(itemSelected);
-						setMenuLocation(currentPoint.x, currentPoint.y);
-						invalidate();
-						requestLayout();
-					}
-				}
+			if (currentMenu.getChildren().get(selectedItem).containsItem()) {
+				currentMenu = currentMenu.getChildren().get(selectedItem);
+				setMenuLocation(currentPoint.x, currentPoint.y);
+				invalidate();
+				requestLayout();
 			}
 		}
 	};
@@ -579,31 +589,52 @@ public class MarkingMenu extends View {
 
 		// getting the distance and the angle.
 		float hyp = MenuCalculations.pythagore(touchPoint.x, touchPoint.y, currentPoint.x, currentPoint.y);
-		float angle = MenuCalculations.arctan(touchPoint.x, touchPoint.y, currentPoint.x, currentPoint.y);
 
 		// if we are in the menu. Computing to know in which item we are.
 		if (hyp > smallRadius && hyp < bigRadius) {
-			if (angle < 0) {
-				angle += 360;
+			selectedItem = getSelectedItem(touchPoint, currentPoint, currentMenu);
+		} else {
+			selectedItem = -1;
+		}
+	}
+
+	/**
+	 * Method used to know in which item the line made by the 2 argument points
+	 * is.
+	 * 
+	 * @param firstPoint
+	 * @param lastPoint
+	 * @return the selected item's index
+	 */
+	private int getSelectedItem(Point firstPoint, Point lastPoint, MarkingMenuItem currentItem) {
+
+		// first we calculate the angle between the 2 points.
+		float angle = MenuCalculations.arctan(firstPoint.x, firstPoint.y, lastPoint.x, lastPoint.y);
+
+		// then we put it positive.
+		if (angle < 0) {
+			angle += 360;
+		}
+
+		// finally we search for the right item.
+		float startAngle = 0;
+		float endAngle = 0;
+		for (int i = 0; i < currentItem.getChildren().size(); i++) {
+
+			// our first angle is always 270.
+			startAngle = (270 + 360 / currentItem.getChildren().size() * i) % 360;
+			endAngle = (startAngle + 360 / currentItem.getChildren().size()) % 360;
+			if (startAngle > endAngle) { // particular case if we are between
+											// 360 and 0.
+				if (angle > startAngle || angle < endAngle) {
+					return i;
+				}
 			}
-			float startAngle = 0;
-			float endAngle = 0;
-			for (int i = 0; i < currentMenu.getChildren().size(); i++) {
-				startAngle = (270 + 360 / currentMenu.getChildren().size() * i) % 360;
-				endAngle = (startAngle + 360 / currentMenu.getChildren().size()) % 360;
-				if (startAngle > endAngle) {
-					if (angle > startAngle || angle < endAngle) {
-						itemSelected = i;
-						return;
-					}
-				}
-				if (angle > startAngle && angle < endAngle) {
-					itemSelected = i;
-					return;
-				}
+			if (angle > startAngle && angle < endAngle) {
+				return i;
 			}
 		}
-		itemSelected = -1;
+		return -1;
 	}
 
 }
