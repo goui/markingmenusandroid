@@ -459,7 +459,11 @@ public class MarkingMenu extends View {
 				OnMenuItemMarkListener listener = currentMenu.getChildren().get(selectedItem).getOnMenuMarkListener();
 				if (listener != null) {
 					listener.onMenuMark();
+				} else {
+					Toast.makeText(getContext(), "no listener here", Toast.LENGTH_SHORT).show();
 				}
+			} else {
+				Toast.makeText(getContext(), "non-leaf item", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

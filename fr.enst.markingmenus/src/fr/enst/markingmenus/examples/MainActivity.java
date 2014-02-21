@@ -53,6 +53,55 @@ public class MainActivity extends Activity {
 				Toast.makeText(MainActivity.this, "Item 1-C marked", Toast.LENGTH_SHORT).show();
 			}
 		});
+		MarkingMenuItem item_1_3_1 = new MarkingMenuItem("a");
+		item_1_3_1.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-C-a marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		MarkingMenuItem item_1_3_2 = new MarkingMenuItem("b");
+		item_1_3_2.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-C-b marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		MarkingMenuItem item_1_3_3 = new MarkingMenuItem("c");
+		item_1_3_3.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-C-c marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		MarkingMenuItem item_1_3_4 = new MarkingMenuItem("d");
+		item_1_3_4.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-C-d marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		MarkingMenuItem item_1_3_5 = new MarkingMenuItem("e");
+		item_1_3_5.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-C-e marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		MarkingMenuItem item_1_3_6 = new MarkingMenuItem("f");
+		item_1_3_6.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-C-f marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		item_1_3.addItem(item_1_3_1);
+		item_1_3.addItem(item_1_3_2);
+		item_1_3.addItem(item_1_3_3);
+		item_1_3.addItem(item_1_3_4);
+		item_1_3.addItem(item_1_3_5);
+		item_1_3.addItem(item_1_3_6);
+		
 		item_1.addItem(item_1_1);
 		item_1.addItem(item_1_2);
 		item_1.addItem(item_1_3);
