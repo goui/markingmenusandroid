@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" author="true" classpath="C:\Users\Goui\ANDROID_ADT_SDK\sdk\platforms\android-18\android.jar" destdir="C:\Users\Goui\Desktop\Télécom ParisTech\3A\Projet Libre P2\repository\markingmenusandroid\javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="fr.enst.markingmenus.examples,fr.enst.markingmenus.interfaces,fr.enst.markingmenus.views,fr.enst.markingmenus.objects" source="1.7" sourcepath="src;gen" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

@@ -276,8 +276,6 @@ public class MarkingMenu extends View {
 	/**
 	 * Method used to draw in expert mode. It will draw a curve following the
 	 * finger.
-	 * 
-	 * @param canvas
 	 */
 	private void onDrawExpert() {
 		Path path = new Path();
@@ -297,8 +295,6 @@ public class MarkingMenu extends View {
 	 * Method used to draw in novice mode. It will set the menu location at the
 	 * very first touch point, set the bounding box for the menu and draw the
 	 * menu.
-	 * 
-	 * @param canvas
 	 */
 	private void onDrawNovice() {
 		setMenuLocation(touchPoint.x, touchPoint.y);
@@ -524,8 +520,6 @@ public class MarkingMenu extends View {
 	/**
 	 * Method used to decrypt the drawn scheme, it will browse items to know
 	 * where the final selected item is.
-	 * 
-	 * @param inflectionPoints
 	 */
 	private void decryptPattern() {
 		MarkingMenuItem currentItem = currentMenu;
@@ -538,11 +532,13 @@ public class MarkingMenu extends View {
 		}
 		if (currentItem.getOnMenuMarkListener() != null) {
 			currentItem.getOnMenuMarkListener().onMenuMark();
-			// TODO clear canvas.
-		} else {
+		} else if (!currentItem.getChildren().isEmpty()) {
 			// TODO show novice menu because we are not on a leaf item.
-			Toast.makeText(getContext(), "Non-leaf Item", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), "non-leaf item", Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(getContext(), "no listener here", Toast.LENGTH_SHORT).show();
 		}
+		// TODO clear canvas.
 	}
 
 	/**

@@ -9,8 +9,17 @@ import fr.enst.markingmenus.interfaces.OnMenuItemMarkListener;
 import fr.enst.markingmenus.objects.MarkingMenuItem;
 import fr.enst.markingmenus.views.MarkingMenu;
 
+/**
+ * Activity used to show how to use MarkingMenu widget.
+ * 
+ * @author Goui
+ * 
+ */
 public class MainActivity extends Activity {
 
+	/**
+	 * The marking menu view.
+	 */
 	private MarkingMenu mm;
 
 	@Override
@@ -18,72 +27,68 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// getting the marking menu view.
 		mm = (MarkingMenu) findViewById(R.id.marking_menu);
 
+		// first item with 3 sub items.
 		MarkingMenuItem item_1 = new MarkingMenuItem("1");
-		
-		MarkingMenuItem item_1_1 = new MarkingMenuItem("1_1");
-		MarkingMenuItem item_1_1_1 = new MarkingMenuItem("1_1_1");
-		MarkingMenuItem item_1_1_2 = new MarkingMenuItem("1_1_2");
-		item_1_1.addItem(item_1_1_1);
-		item_1_1.addItem(item_1_1_2);
-		
-		MarkingMenuItem item_1_2 = new MarkingMenuItem("1_2");
-		
-		item_1.addItem(item_1_1);
-		item_1.addItem(item_1_2);
-
-		MarkingMenuItem item_2 = new MarkingMenuItem("2");
-		item_2.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+		MarkingMenuItem item_1_1 = new MarkingMenuItem("A");
+		item_1_1.setOnMenuMarkListener(new OnMenuItemMarkListener() {
 			@Override
 			public void onMenuMark() {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "Sfwdgf", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "Item 1-A marked", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
-		MarkingMenuItem item_2_1 = new MarkingMenuItem("2_1");
+		MarkingMenuItem item_1_2 = new MarkingMenuItem("B");
+		item_1_2.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-B marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		MarkingMenuItem item_1_3 = new MarkingMenuItem("C");
+		item_1_3.setOnMenuMarkListener(new OnMenuItemMarkListener() {
+			@Override
+			public void onMenuMark() {
+				Toast.makeText(MainActivity.this, "Item 1-C marked", Toast.LENGTH_SHORT).show();
+			}
+		});
+		item_1.addItem(item_1_1);
+		item_1.addItem(item_1_2);
+		item_1.addItem(item_1_3);
+
+		// second item with 2 sub items.
+		MarkingMenuItem item_2 = new MarkingMenuItem("2");
+		MarkingMenuItem item_2_1 = new MarkingMenuItem("A");
 		item_2_1.setOnMenuMarkListener(new OnMenuItemMarkListener() {
 			@Override
 			public void onMenuMark() {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "item_2_1", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "Item 2-A marked", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
-		MarkingMenuItem item_2_2 = new MarkingMenuItem("2_2");
+		MarkingMenuItem item_2_2 = new MarkingMenuItem("B");
 		item_2_2.setOnMenuMarkListener(new OnMenuItemMarkListener() {
 			@Override
 			public void onMenuMark() {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "item_2_2", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "Item 2-B marked", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
-		MarkingMenuItem item_2_3 = new MarkingMenuItem("2_3");
-		item_2_3.setOnMenuMarkListener(new OnMenuItemMarkListener() {
-			@Override
-			public void onMenuMark() {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "item_2_3", Toast.LENGTH_SHORT).show();
-			}
-		});
-		
 		item_2.addItem(item_2_1);
 		item_2.addItem(item_2_2);
-		item_2.addItem(item_2_3);
 
+		// third item with no sub item and a listener.
 		MarkingMenuItem item_3 = new MarkingMenuItem("3");
 		item_3.setOnMenuMarkListener(new OnMenuItemMarkListener() {
 			@Override
 			public void onMenuMark() {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "poyfoqiufhis", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "Item 3 marked", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
+
+		// fourth item with no sub item and no listener.
 		MarkingMenuItem item_4 = new MarkingMenuItem("4");
 
+		// adding first level items to the marking menu.
 		mm.addItem(item_1);
 		mm.addItem(item_2);
 		mm.addItem(item_3);
